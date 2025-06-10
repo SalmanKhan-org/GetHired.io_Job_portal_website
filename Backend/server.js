@@ -3,6 +3,7 @@ dotenv.config({ path: 'C:/JobPortal/.env' });
 import './config/instrument.js'
 import express from 'express'
 import cors from 'cors'
+import bodyParser from 'body-parser';
 
 import * as Sentry from '@sentry/node'
 import clerkWebhooks from './controllers/userControllers/webhooks.js';
@@ -29,7 +30,7 @@ const connectDB = async () => {
 }
 
 //Api's
-app.post('/api/v1/webhooks', clerkWebhooks);
+app.post('/api/v1/webhooks', bodyParser.raw({ type: 'application/json' }), clerkWebhooks);
 app.get('/', (req, res) => {
     res.send("API's Working successfully")
 })
