@@ -27,7 +27,7 @@ const connectDB = async () => {
 }
 
 //Api's
-app.post('/api/v1/webhoo', clerkWebhooks);
+app.post('/api/v1/webhooks', clerkWebhooks);
 app.get('/', (req, res) => {
     res.send("API's Working successfully")
 })
