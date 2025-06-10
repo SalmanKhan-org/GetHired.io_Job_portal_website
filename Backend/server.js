@@ -1,7 +1,9 @@
+import dotenv from 'dotenv';
+dotenv.config({ path: 'C:/JobPortal/.env' });
 import './config/instrument.js'
 import express from 'express'
 import cors from 'cors'
-import 'dotenv/config';
+
 import * as Sentry from '@sentry/node'
 import clerkWebhooks from './controllers/userControllers/webhooks.js';
 
