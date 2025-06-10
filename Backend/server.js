@@ -27,7 +27,10 @@ const connectDB = async () => {
 }
 
 //Api's
-app.post('/api/v1/webhoo', clerkWebhooks)
+app.post('/api/v1/webhoo', clerkWebhooks);
+app.get('/', (req, res) => {
+    res.send("API's Working successfully")
+})
 
 //Sentry for Error Monitoring
 Sentry.setupExpressErrorHandler(app);
