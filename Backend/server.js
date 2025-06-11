@@ -4,9 +4,11 @@ import './config/instrument.js'
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser';
+import mongoose from "mongoose";
 
 import * as Sentry from '@sentry/node'
 import clerkWebhooks from './controllers/userControllers/webhooks.js';
+import connectDB from './config/connectDB.js';
 
 const app = express();
 
@@ -14,23 +16,10 @@ app.use(cors({
     origin: process.env.FRONTEND_URL,
     methods: ['GET','POST','PUT','DELETE']
 }))
-app.use(express.json());
-
-import mongoose from "mongoose";
-
-// connect to Database 
-const connectDB = async () => {
-    try {
-        await mongoose.connect(process.env.MONGODB_URI).then((res) => {
-            console.log("Connect to DB successfully");
-        })
-    } catch (error) {
-        console.log(error);
-    }
-}
 
 //Api's
 app.post('/api/v1/webhooks', bodyParser.raw({ type: 'application/json' }), clerkWebhooks);
+app.use(express.json());
 app.get('/', (req, res) => {
     res.send("API's Working successfully")
 })
