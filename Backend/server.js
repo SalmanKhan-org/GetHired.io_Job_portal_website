@@ -28,7 +28,20 @@ app.get('/', (req, res) => {
 Sentry.setupExpressErrorHandler(app);
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, (req, res) => {
-    connectDB();
-    console.log(`Server is listening at port ${PORT}`);
-})
+// Connect to MongoDB and start the server
+const startServer = async () => {
+    try {
+        await mongoose.connect(process.env.MONGODB_URI);
+        console.log("✅ Connected to MongoDB");
+
+        // Start server only after DB is connected
+        app.listen(PORT, () => {
+            console.log(`🚀 Server is listening on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error("❌ Failed to connect to MongoDB:", error.message);
+        process.exit(1); // Exit if DB connection fails
+    }
+};
+
+startServer();
