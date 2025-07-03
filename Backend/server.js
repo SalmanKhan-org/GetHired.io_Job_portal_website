@@ -17,7 +17,7 @@ import { clerkMiddleware } from '@clerk/express'
 const app = express();
 
 app.use(cors({
-    origin: 'http://localhost:5173',  // ✅ no trailing slash
+    origin: 'https://gethiredio.vercel.app',  // ✅ no trailing slash
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
