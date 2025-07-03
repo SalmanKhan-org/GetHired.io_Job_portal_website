@@ -57,8 +57,8 @@ npm install
 
 
 ## Future Enhancements
-Admin dashboard to manage all jobs and users
-Notification system for application status
-Email integration for alerts
-Dark mode toggle
-Bookmark/save job feature for users
+1.Admin dashboard to manage all jobs and users
+2.Notification system for application status
+3.Email integration for alerts
+4.Dark mode toggle
+5.Bookmark/save job feature for users ...
