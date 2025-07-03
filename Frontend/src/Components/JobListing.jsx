@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../context/appContext'
-import { assets, JobCategories, JobLocations, jobsData } from '../assets/assets';
+import { assets, JobCategories, JobLocations } from '../assets/assets';
 import JobCard from './JobCard';
 
 const JobListing = () => {
-    const { isSearch, searchFilter, setSearchFilter } = useContext(AppContext);
+    const { isSearch, searchFilter, setSearchFilter, jobs } = useContext(AppContext);
     const [showFilter, setShowFilter] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -24,14 +24,14 @@ const JobListing = () => {
         const matchesTitle = job => searchFilter.title === "" || job.title.toLowerCase().includes(searchFilter.title.toLowerCase())
         const matchesSearchLocation = job => searchFilter?.location === "" || job.location.toLowerCase().includes(searchFilter.location.toLowerCase())
 
-        const newFilteredJobs = jobsData.slice().reverse().filter(
+        const newFilteredJobs = jobs.slice().reverse().filter(
             (job) => matchesCategory(job) && matchesLocation(job) && matchesTitle(job) && matchesSearchLocation(job)
         )
 
         setFilteredJobs(newFilteredJobs);
         setCurrentPage(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[ jobsData, selectedLocation, selectedCategories, searchFilter])
+    },[ jobs, selectedLocation, selectedCategories, searchFilter])
     return (
         <div className='container 2xl:px-20 mx-auto  flex flex-col lg:flex-row max-lg:space-y-8 py-8'>
             {/* sidebar */}

@@ -1,33 +1,49 @@
 import dotenv from 'dotenv';
-dotenv.config({ path: 'C:/JobPortal/.env' });
+dotenv.config({ path: '../.env' });
 import './config/instrument.js'
 import express from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser';
 import mongoose from "mongoose";
-
 import * as Sentry from '@sentry/node'
 import clerkWebhooks from './controllers/userControllers/webhooks.js';
-import connectDB from './config/connectDB.js';
+import { error } from './middlewares/error.js';
+import companyRoutes from './routes/companyRoutes.js'
+import jobRoutes from './routes/jobRoutes.js'
+import userRoutes from './routes/userRoutes.js'
+import { clerkMiddleware } from '@clerk/express'
 
+ 
 const app = express();
 
 app.use(cors({
-    origin: process.env.FRONTEND_URL,
-    methods: ['GET','POST','PUT','DELETE']
-}))
+    origin: 'http://localhost:5173',  // ✅ no trailing slash
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
 
-//Api's
+
+app.use('/api/v1/company', express.json(), companyRoutes);
+app.use("/api/v1/jobs", express.json() ,jobRoutes);
+
 app.post('/api/v1/webhooks', bodyParser.raw({ type: 'application/json' }), clerkWebhooks);
-app.use(express.json());
+
+app.use(clerkMiddleware({
+    secretKey: process.env.CLERK_SECRET_KEY,
+    publishableKey: process.env.CLERK_PUBLISHABLE_KEY
+}));
+app.use("/api/v1", express.json(),  userRoutes);
+//Api's
 app.get('/', (req, res) => {
     res.send("API's Working successfully")
 })
 
+// error handler middleware
+app.use(error);
 //Sentry for Error Monitoring
 Sentry.setupExpressErrorHandler(app);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT ;
 // Connect to MongoDB and start the server
 const startServer = async () => {
     try {

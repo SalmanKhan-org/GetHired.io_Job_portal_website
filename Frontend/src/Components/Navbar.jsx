@@ -5,11 +5,12 @@ import { Link } from 'react-router-dom';
 import { AppContext } from '../context/appContext';
 
 const Navbar = () => {
-    const { openSignIn } = useClerk();
+  const { openSignIn } = useClerk();
+  
+  const { setShowRecruiterLogin } = useContext(AppContext);
 
   const { user } = useUser();
   
-  const { setShowRecruiterLogin } = useContext(AppContext);
   return (
     <div className='shadow md:py-2 py-1'>
           <div className='container px-4 2xl:px-20 mx-auto flex justify-between'>
@@ -23,9 +24,9 @@ const Navbar = () => {
                       <p className='max-sm:hidden'>Hi, {user?.firstName + " " + user?.lastName}</p>
                     <UserButton/>
               </div>
-                  : <div className='flex gap-4 max-sm:text-xs'>
+                  : <div className='flex gap-4 items-center max-sm:text-xs'>
                   <button onClick={()=>setShowRecruiterLogin(true)} className='text-gray-600  cursor-pointer'>Recruiter Login</button>
-                  <button onClick={() => openSignIn()} className='bg-blue-600 cursor-pointer text-white px-3 md:px-9 py-0  rounded-full'>Login</button>
+                  <button onClick={() => openSignIn()} className='bg-blue-600 cursor-pointer text-white px-3 md:px-9 py-1  rounded-full'>Login</button>
               </div>}
 
           </div>

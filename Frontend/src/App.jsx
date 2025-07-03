@@ -11,22 +11,23 @@ import AddJob from "./Pages/AddJob"
 import ManageJobs from "./Pages/ManageJobs"
 import ViewApplication from "./Pages/ViewApplication"
 import 'quill/dist/quill.snow.css'
+import ProtectedRoute from "./Components/ProtectedRoute"
 
 
 
 const router = createBrowserRouter([
   {
-  path: "/",
-  element: <Layout />,
-  children: [
-    { index:true, element: <Home /> },
-    { path: "applications", element: <Applications /> },
-    { path: "appliedJobs", element: <AppliedJobs /> },
-    { path: "apply-job/:id", element: <ApplyNow /> },
-  ],
+    path: "/",
+    element: <Layout />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "applications", element: <Applications /> },
+      { path: "appliedJobs", element: <AppliedJobs /> },
+      { path: "apply-job/:id", element: <ApplyNow /> },
+    ],
   },
   {
-    path: '/dashboard', element: <Dashboard />,
+    path: '/dashboard', element: <ProtectedRoute><Dashboard /></ProtectedRoute>,
     children: [
       { path: 'add/job', element: <AddJob /> },
       { path: 'manage-jobs', element: <ManageJobs /> },
@@ -38,8 +39,8 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <Toaster/>
-      <RouterProvider router={ router} />
+      <Toaster />
+      <RouterProvider router={router} />
     </>
   )
 }

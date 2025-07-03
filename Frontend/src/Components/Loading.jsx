@@ -1,11 +1,15 @@
-import React from 'react'
-import loadingIcon from '../assets/loading.svg'
-const Loading = () => {
-    return (
-        <div className='w-screen h-screen fixed top-0 left-0 z-50 flex justify-center items-center'>
-            <img src={loadingIcon} width={100} />
-        </div>
-    )
-}
+// components/Loader.jsx
+import React from 'react';
 
-export default Loading
+const Loader = () => {
+    return (
+        <div className="absolute inset-0 flex justify-center items-center">
+            <div className="relative w-16 h-16">
+                <div className="absolute inset-0 rounded-full border-4 border-purple-500 border-t-transparent animate-spin"></div>
+                <div className="absolute inset-2 rounded-full border-4 border-purple-200 border-b-transparent animate-spin"></div>
+            </div>
+        </div>
+    );
+};
+
+export default Loader;
